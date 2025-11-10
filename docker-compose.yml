@@ -1,0 +1,49 @@
+services:
+  postgres-test:
+    image: postgres:17-alpine # Actualizado de 15-alpine a 17-alpine
+    container_name: postgres-test
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: jointjs_user
+      POSTGRES_PASSWORD: jointjs_password
+      POSTGRES_DB: uml_collab
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jointjs_user -d uml_collab"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  pgadmin-test:
+    image: dpage/pgadmin4:9.9.0 # Versión más reciente (noviembre 2025)
+    container_name: pgadmin-test
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres-test:
+        condition: service_healthy
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+    name: postgres_data
+  pgadmin_data:
+    name: pgadmin_data
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,10 @@
+node_modules
+dist/
+scripts/
+.env
+logs/
+docs/
+backups/
+out/
+
+package-lock.json

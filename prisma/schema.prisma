@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Usuario
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String // Debería estar hasheada
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  // createdDiagrams     DiagramSnapshot[] @relation("DiagramCreator")
+  sentInvitations     Invitation[] @relation("InvitationCreator")
+  receivedInvitations Invitation[] @relation("InvitationInvitee")
+
+  @@map("users")
+}
+
+// Modelo de Snapshot de Diagrama (entidad principal para diagramas)
+model DiagramSnapshot {
+  id             String   @id @default(cuid())
+  diagramId      String   @unique // ID único del diagrama
+  name           String
+  description    String?
+  creatorId      String
+  collaborators  String[] // Array de IDs de colaboradores
+  state          Json // Estado completo del diagrama en JSON
+  physicalModel  Json? // Modelo físico generado (opcional)
+  migrations     String[] @default([]) // Lista de nombres de migraciones (V1, V2, etc.) - DEPRECATED
+  migrationFiles Json?    @default("[]") // Array de {fileName: string, sql: string} con el historial completo
+  version        Int      @default(1)
+  isPublic       Boolean  @default(false)
+  tags           String[] // Tags para categorización
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  lastActivityAt DateTime @default(now())
+  thumbnail      String?
+
+  // Relaciones
+  // creator     User         @relation("DiagramCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  invitations Invitation[]
+
+  @@map("diagram_snapshots")
+}
+
+// Modelo de Invitaciones
+model Invitation {
+  id           String           @id @default(cuid())
+  diagramId    String
+  creatorId    String
+  inviteeEmail String
+  inviteeId    String?
+  status       InvitationStatus @default(pending)
+  message      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  expiresAt    DateTime
+  acceptedAt   DateTime?
+  rejectedAt   DateTime?
+
+  // Relaciones
+  creator User            @relation("InvitationCreator", fields: [creatorId], references: [id], onDelete: Cascade)
+  invitee User?           @relation("InvitationInvitee", fields: [inviteeId], references: [id], onDelete: SetNull)
+  diagram DiagramSnapshot @relation(fields: [diagramId], references: [diagramId], onDelete: Cascade)
+
+  @@map("invitations")
+}
+
+// Enum para el estado de las invitaciones
+enum InvitationStatus {
+  pending
+  accepted
+  rejected
+  expired
+}
