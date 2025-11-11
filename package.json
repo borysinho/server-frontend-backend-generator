@@ -20,7 +20,7 @@
     "db:list-backups": "./scripts/db-backup-simple.sh list",
     "db:init:prod": "./scripts/init-production.sh",
     "build:prod": "npm run db:migrate:deploy && npm run db:generate && npm run build",
-    "vercel-build": "echo '🚀 Iniciando build para Vercel...' && npm run db:migrate:deploy && echo '✅ Migraciones aplicadas' && npm run db:generate && echo '✅ Cliente Prisma generado' && npm run build && echo '✅ Build completado exitosamente'",
+    "vercel-build": "./scripts/vercel-build.sh",
     "generate:flutter": "tsx generate-flutter.ts"
   },
   "keywords": [],
