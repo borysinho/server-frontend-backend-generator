@@ -444,7 +444,7 @@
   "variable": [
     {
       "key": "base_url",
-      "value": "http://localhost:3001",
+      "value": "https://server-frontend-backend-generator.vercel.app",
       "type": "string",
       "description": "URL base del servidor API"
     },
