@@ -35,10 +35,12 @@ jobs:
         with:
           name: node-app
           path: |
-            .
-            !node_modules/**
-            !.git/**
-            !*.log
+            dist/
+            package*.json
+            prisma/
+            src/
+            .env
+            tsconfig.json
 
   deploy:
     runs-on: ubuntu-latest
