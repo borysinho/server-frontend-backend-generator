@@ -12,9 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: server
     permissions:
       contents: read #This is required for actions/checkout
 
@@ -46,9 +43,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    defaults:
-      run:
-        working-directory: server
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
