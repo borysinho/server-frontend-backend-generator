@@ -8,12 +8,5 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "regions": ["iad1"],
-  "functions": {
-    "src/index.ts": {
-      "maxDuration": 30,
-      "runtime": "nodejs18.x"
-    }
-  },
-  "crons": []
+  "regions": ["iad1"]
 }
