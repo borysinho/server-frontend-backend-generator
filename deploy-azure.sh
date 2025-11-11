@@ -6,11 +6,11 @@
 set -e
 
 # Configuración
-RESOURCE_GROUP="uml-diagram-rg"
-APP_SERVICE_PLAN="uml-diagram-plan"
-WEB_APP_NAME="uml-diagram-backend"
+RESOURCE_GROUP="uml-diagram-rg-linux"
+APP_SERVICE_PLAN="uml-diagram-plan-linux"
+WEB_APP_NAME="uml-diagram-backend-linux"
 LOCATION="East US"
-NODE_VERSION="20"
+NODE_VERSION="24"
 
 echo "🚀 Iniciando despliegue del servidor backend a Azure App Service..."
 
@@ -37,7 +37,8 @@ az appservice plan create \
     --name $APP_SERVICE_PLAN \
     --resource-group $RESOURCE_GROUP \
     --location "$LOCATION" \
-    --sku FREE \
+    --sku B1 \
+    --is-linux \
     --output none
 
 # Crear Web App
@@ -46,7 +47,7 @@ az webapp create \
     --name $WEB_APP_NAME \
     --resource-group $RESOURCE_GROUP \
     --plan $APP_SERVICE_PLAN \
-    --runtime "NODE|$NODE_VERSION" \
+    --runtime "NODE|$NODE_VERSION-lts" \
     --output none
 
 # Configurar Node.js version
