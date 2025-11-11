@@ -19,8 +19,6 @@
     "db:restore": "./scripts/db-backup-simple.sh restore",
     "db:list-backups": "./scripts/db-backup-simple.sh list",
     "db:init:prod": "./scripts/init-production.sh",
-    "build:prod": "npm run db:migrate:deploy && npm run db:generate && npm run build",
-    "vercel-build": "./scripts/vercel-build.sh",
     "generate:flutter": "tsx generate-flutter.ts"
   },
   "keywords": [],
