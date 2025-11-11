@@ -1606,3 +1606,6 @@ app.get("/api/debug/invitations/:userId", async (req, res) => {
 });
 
 export { app, server, io };
+
+// Exportación por defecto para Vercel Functions
+export default app;
