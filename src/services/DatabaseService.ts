@@ -1,4 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import pkg from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
+const { PrismaClient: PrismaClientImpl } = pkg;
 import { User } from "../models/UserModel.js";
 import { DiagramSnapshot } from "../models/DiagramSnapshotModel.js";
 import { Invitation, InvitationStatus } from "../models/InvitationModel.js";
@@ -23,7 +25,7 @@ export class DatabaseService {
   private prisma: PrismaClient;
 
   constructor() {
-    this.prisma = new PrismaClient({
+    this.prisma = new PrismaClientImpl({
       log: ["query", "info", "warn", "error"],
     });
   }
