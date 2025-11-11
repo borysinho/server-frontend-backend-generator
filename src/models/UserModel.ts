@@ -1,4 +1,4 @@
-import { databaseService } from "../services/DatabaseService.js";
+import { databaseService } from "../services/DatabaseService";
 import bcrypt from "bcrypt";
 
 export interface User {

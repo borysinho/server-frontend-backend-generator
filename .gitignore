@@ -2,9 +2,6 @@ node_modules
 dist/
 scripts/
 .env
-.env.local
-.env.production
-.env.development
 logs/
 docs/
 backups/

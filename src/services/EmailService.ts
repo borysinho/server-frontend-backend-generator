@@ -23,7 +23,7 @@ export class EmailService {
     });
 
     // Verificar la configuración del transporter
-    this.transporter.verify((error: Error | null, success: boolean) => {
+    this.transporter.verify((error, success) => {
       if (error) {
         console.error("Error en la configuración del transporter:", error);
       } else {

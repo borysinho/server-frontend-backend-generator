@@ -1,10 +1,8 @@
-import pkg from "@prisma/client";
-import type { PrismaClient } from "@prisma/client";
-const { PrismaClient: PrismaClientImpl } = pkg;
-import { User } from "../models/UserModel.js";
-import { DiagramSnapshot } from "../models/DiagramSnapshotModel.js";
-import { Invitation, InvitationStatus } from "../models/InvitationModel.js";
-import { DiagramState } from "../models/DiagramModel.js";
+import { PrismaClient } from "@prisma/client";
+import { User } from "../models/UserModel";
+import { DiagramSnapshot } from "../models/DiagramSnapshotModel";
+import { Invitation, InvitationStatus } from "../models/InvitationModel";
+import { DiagramState } from "../models/DiagramModel";
 
 interface CreateDiagramSnapshotData {
   diagramId: string;
@@ -25,7 +23,7 @@ export class DatabaseService {
   private prisma: PrismaClient;
 
   constructor() {
-    this.prisma = new PrismaClientImpl({
+    this.prisma = new PrismaClient({
       log: ["query", "info", "warn", "error"],
     });
   }
@@ -166,7 +164,7 @@ export class DatabaseService {
         take: 5,
       });
       console.log(`📋 Primeros diagramas en BD:`);
-      allDiagrams.forEach((d: any) => {
+      allDiagrams.forEach((d) => {
         console.log(
           `   - ${d.name} (ID: ${d.diagramId}, Creador: ${
             d.creatorId

@@ -1,8 +1,7 @@
-import pkg from "@prisma/client";
-const { PrismaClient: PrismaClientImpl } = pkg;
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 
-const prisma = new PrismaClientImpl();
+const prisma = new PrismaClient();
 
 async function main() {
   console.log("🌱 Iniciando seed de la base de datos...");

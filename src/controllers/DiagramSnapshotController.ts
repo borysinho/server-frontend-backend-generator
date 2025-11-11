@@ -156,7 +156,7 @@ export class DiagramSnapshotController {
                   `🔧 Corrigiendo colaboradores del diagrama ${diagram.name}...`
                 );
                 const updatedCollaborators = [
-                  ...diagram.collaborators.filter((id: string) => {
+                  ...diagram.collaborators.filter((id) => {
                     // Remover IDs obsoletos del mismo email (opcional)
                     return true; // Por ahora no filtramos, solo agregamos
                   }),
