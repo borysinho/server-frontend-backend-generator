@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 
 // Configurar variables de entorno
 dotenv.config();
+
 import {
   DiagramController,
   ViewObserver,
