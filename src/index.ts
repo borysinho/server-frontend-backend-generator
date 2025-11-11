@@ -248,9 +248,17 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5174", // Vite dev server
+    origin: process.env.NODE_ENV === 'production'
+      ? ["https://client-frontend-backend-generator.vercel.app", "https://borysinho.github.io"]
+      : ["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"],
     methods: ["GET", "POST"],
   },
+  // Forzar polling en producción (Vercel no soporta WebSockets en plan gratuito)
+  transports: process.env.NODE_ENV === 'production' ? ['polling'] : ['polling', 'websocket'],
+  // Configuración adicional para polling
+  allowEIO3: true,
+  pingTimeout: 60000,
+  pingInterval: 25000,
 });
 
 const PORT = process.env.PORT || 3001;
