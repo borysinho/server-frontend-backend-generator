@@ -12,12 +12,6 @@
       "dest": "src/index.ts"
     }
   ],
-  "functions": {
-    "src/index.ts": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    }
-  },
   "env": {
     "NODE_ENV": "production"
   },

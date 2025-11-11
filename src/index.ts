@@ -1531,17 +1531,19 @@ app.post("/api/flutter/generate", async (req, res) => {
   }
 });
 
-// Iniciar servidor
-server
-  .listen(PORT, () => {
-    console.log(`🚀 Servidor MVC corriendo en http://localhost:${PORT}`);
-    console.log(`📊 WebSocket listo para conexiones`);
-    console.log(`🎯 Patrón MVC implementado: Vista -> Controlador -> Modelo`);
-  })
-  .on("error", (error) => {
-    console.error("Error al iniciar servidor:", error);
-    process.exit(1);
-  });
+// Iniciar servidor solo si NO estamos en Vercel
+if (process.env.VERCEL !== "1") {
+  server
+    .listen(PORT, () => {
+      console.log(`🚀 Servidor MVC corriendo en http://localhost:${PORT}`);
+      console.log(`📊 WebSocket listo para conexiones`);
+      console.log(`🎯 Patrón MVC implementado: Vista -> Controlador -> Modelo`);
+    })
+    .on("error", (error) => {
+      console.error("Error al iniciar servidor:", error);
+      process.exit(1);
+    });
+}
 
 // Manejar errores no capturados
 process.on("uncaughtException", (error) => {
