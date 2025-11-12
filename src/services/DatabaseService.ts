@@ -1,8 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { User } from "../models/UserModel";
-import { DiagramSnapshot } from "../models/DiagramSnapshotModel";
-import { Invitation, InvitationStatus } from "../models/InvitationModel";
-import { DiagramState } from "../models/DiagramModel";
+import { User } from "../models/UserModel.js";
+import { DiagramSnapshot } from "../models/DiagramSnapshotModel.js";
+import { Invitation, InvitationStatus } from "../models/InvitationModel.js";
+import { DiagramState } from "../models/DiagramModel.js";
 
 interface CreateDiagramSnapshotData {
   diagramId: string;
