@@ -251,6 +251,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:5173",
       "https://client-frontend-backend-generator.vercel.app",
+      "https://client-frontend-backend-generator-7oa22n0ki.vercel.app",
     ],
     methods: ["GET", "POST"],
   },
@@ -264,6 +265,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://client-frontend-backend-generator.vercel.app",
+      "https://client-frontend-backend-generator-7oa22n0ki.vercel.app",
     ],
     credentials: true,
   })
