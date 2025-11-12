@@ -974,26 +974,33 @@ app.get("/diagram/:diagramId/state", async (req, res) => {
 });
 
 // Rutas API para invitaciones
-app.post("/api/invitations", (req, res) =>
-  invitationController.createInvitation(req, res)
+app.post(
+  "/api/invitations",
+  async (req, res) => await invitationController.createInvitation(req, res)
 );
-app.get("/api/invitations/user/:userId", (req, res) =>
-  invitationController.getInvitationsByUser(req, res)
+app.get(
+  "/api/invitations/user/:userId",
+  async (req, res) => await invitationController.getInvitationsByUser(req, res)
 );
-app.get("/api/invitations/:id", (req, res) =>
-  invitationController.getInvitationById(req, res)
+app.get(
+  "/api/invitations/:id",
+  async (req, res) => await invitationController.getInvitationById(req, res)
 );
-app.post("/api/invitations/:id/accept", (req, res) =>
-  invitationController.acceptInvitation(req, res)
+app.post(
+  "/api/invitations/:id/accept",
+  async (req, res) => await invitationController.acceptInvitation(req, res)
 );
-app.post("/api/invitations/:id/reject", (req, res) =>
-  invitationController.rejectInvitation(req, res)
+app.post(
+  "/api/invitations/:id/reject",
+  async (req, res) => await invitationController.rejectInvitation(req, res)
 );
-app.delete("/api/invitations/:id", (req, res) =>
-  invitationController.deleteInvitation(req, res)
+app.delete(
+  "/api/invitations/:id",
+  async (req, res) => await invitationController.deleteInvitation(req, res)
 );
-app.get("/api/invitations", (req, res) =>
-  invitationController.getAllInvitations(req, res)
+app.get(
+  "/api/invitations",
+  async (req, res) => await invitationController.getAllInvitations(req, res)
 );
 
 // Endpoint de prueba
@@ -1005,38 +1012,50 @@ app.get("/api/test", (req, res) => {
 });
 
 // Rutas API para diagramas
-app.get("/api/diagrams/check-name", (req, res) =>
-  diagramSnapshotController.checkDiagramNameExists(req, res)
+app.get(
+  "/api/diagrams/check-name",
+  async (req, res) =>
+    await diagramSnapshotController.checkDiagramNameExists(req, res)
 );
-app.get("/api/diagrams/user/:userId", (req, res) =>
-  diagramSnapshotController.getDiagramsByUser(req, res)
+app.get(
+  "/api/diagrams/user/:userId",
+  async (req, res) =>
+    await diagramSnapshotController.getDiagramsByUser(req, res)
 );
-app.get("/api/diagrams/:diagramId", (req, res) =>
-  diagramSnapshotController.getDiagramById(req, res)
+app.get(
+  "/api/diagrams/:diagramId",
+  async (req, res) => await diagramSnapshotController.getDiagramById(req, res)
 );
-app.post("/api/diagrams", (req, res) =>
-  diagramSnapshotController.createDiagram(req, res)
+app.post(
+  "/api/diagrams",
+  async (req, res) => await diagramSnapshotController.createDiagram(req, res)
 );
 app.put("/api/diagrams/:diagramId", async (req, res) => {
   await diagramSnapshotController.updateDiagram(req, res);
   // Recargar el estado del controlador después de actualizar la DB
   await diagramManager.reloadControllerState(req.params.diagramId);
 });
-app.delete("/api/diagrams/:diagramId", (req, res) =>
-  diagramSnapshotController.deleteDiagram(req, res)
+app.delete(
+  "/api/diagrams/:diagramId",
+  async (req, res) => await diagramSnapshotController.deleteDiagram(req, res)
 );
 
 // Endpoint de IA
-app.post("/api/ai/process", (req, res) =>
-  aiController.processAIRequest(req, res)
+app.post(
+  "/api/ai/process",
+  async (req, res) => await aiController.processAIRequest(req, res)
 );
 
 // Endpoints de exportación
-app.get("/api/diagrams/:diagramId/export/json", (req, res) =>
-  diagramSnapshotController.exportDiagramAsJSON(req, res)
+app.get(
+  "/api/diagrams/:diagramId/export/json",
+  async (req, res) =>
+    await diagramSnapshotController.exportDiagramAsJSON(req, res)
 );
-app.get("/api/diagrams/:diagramId/export/svg", (req, res) =>
-  diagramSnapshotController.exportDiagramAsSVG(req, res)
+app.get(
+  "/api/diagrams/:diagramId/export/svg",
+  async (req, res) =>
+    await diagramSnapshotController.exportDiagramAsSVG(req, res)
 );
 
 // Endpoint para generar backend
