@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
@@ -248,7 +248,10 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5174", // Vite dev server
+    origin: [
+      "http://localhost:5173",
+      "https://client-frontend-backend-generator.vercel.app",
+    ],
     methods: ["GET", "POST"],
   },
 });
@@ -256,7 +259,15 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://client-frontend-backend-generator.vercel.app",
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Instancia del controlador (única para toda la aplicación)
@@ -892,12 +903,12 @@ io.on("connection", (socket) => {
 });
 
 // Rutas HTTP para estadísticas y estado
-app.get("/health", (req, res) => {
+app.get("/health", (req: Request, res: Response) => {
   res.json({ status: "ok", timestamp: Date.now() });
 });
 
 // Endpoint de prueba para validación de credenciales
-app.post("/api/auth/login", async (req, res) => {
+app.post("/api/auth/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     console.log(`Intento de login - Email: ${email}`);
