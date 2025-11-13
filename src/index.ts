@@ -1005,6 +1005,12 @@ app.get(
   async (req, res) => await invitationController.getAllInvitations(req, res)
 );
 
+// Endpoint de prueba para envío de emails
+app.post(
+  "/api/test-email",
+  async (req, res) => await invitationController.testEmail(req, res)
+);
+
 // Endpoint de prueba
 app.get("/api/test", (req, res) => {
   res.json({

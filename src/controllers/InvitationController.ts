@@ -6,6 +6,60 @@ import { databaseService } from "../services/DatabaseService.js";
 const invitationModel = new InvitationModel();
 
 export class InvitationController {
+  // Endpoint de prueba para verificar envío de emails
+  async testEmail(req: Request, res: Response) {
+    try {
+      const { email, type = "simple" } = req.body;
+
+      if (!email) {
+        return res.status(400).json({ error: "Email requerido" });
+      }
+
+      console.log(`🧪 Probando envío de email tipo '${type}' a:`, email);
+
+      let success = false;
+
+      if (type === "invitation") {
+        // Email similar a una invitación real
+        success = await emailService.sendInvitationEmail(email, {
+          creatorName: "Borys",
+          diagramName: "Colegio",
+          invitationId: "test-invitation-real",
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          message: "Prueba de invitación similar a la real",
+        });
+      } else if (type === "acceptance") {
+        // Email de aceptación de invitación
+        success = await emailService.sendInvitationAcceptedEmail(email, {
+          inviteeName: "Usuario de Prueba",
+          diagramName: "Colegio",
+        });
+      } else {
+        // Email simple de prueba
+        success = await emailService.sendInvitationEmail(email, {
+          creatorName: "Sistema de Prueba",
+          diagramName: "Test de Email",
+          invitationId: "test-123",
+          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 horas
+          message: "Este es un email de prueba simple",
+        });
+      }
+
+      if (success) {
+        res.json({
+          message: `Email tipo '${type}' enviado exitosamente`,
+          email,
+          type,
+        });
+      } else {
+        res.status(500).json({ error: "Error al enviar email" });
+      }
+    } catch (error) {
+      console.error("Error en testEmail:", error);
+      res.status(500).json({ error: "Error interno del servidor" });
+    }
+  }
+
   // Crear una nueva invitación
   async createInvitation(req: Request, res: Response) {
     try {
@@ -39,6 +93,13 @@ export class InvitationController {
 
       if (creator && diagram) {
         console.log("Enviando email de invitación...");
+        console.log("Detalles del envío:");
+        console.log("- Para:", invitation.inviteeEmail);
+        console.log("- De:", process.env.EMAIL_USER);
+        console.log("- Creador:", creator.name);
+        console.log("- Diagrama:", diagram.name);
+        console.log("- Invitación ID:", invitation.id);
+
         // Enviar correo de invitación de forma asíncrona
         emailService
           .sendInvitationEmail(invitation.inviteeEmail, {
@@ -48,9 +109,21 @@ export class InvitationController {
             expiresAt: invitation.expiresAt,
             message: invitation.message,
           })
+          .then((success) => {
+            console.log(
+              "Resultado del envío de email:",
+              success ? "EXITOSO" : "FALLIDO"
+            );
+          })
           .catch((error) => {
             console.error("Error al enviar correo de invitación:", error);
           });
+      } else {
+        console.log(
+          "No se puede enviar email: faltan datos del creador o diagrama"
+        );
+        if (!creator) console.log("- Creator no encontrado");
+        if (!diagram) console.log("- Diagram no encontrado");
       }
 
       res.status(201).json(invitation);
