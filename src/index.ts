@@ -255,6 +255,7 @@ const io = new Server(server, {
       "https://client-frontend-backend-generator.netlify.app",
     ],
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
@@ -270,9 +271,24 @@ app.use(
       "https://client-frontend-backend-generator.netlify.app",
     ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   })
 );
 app.use(express.json());
+
+// Handle preflight requests
+app.options('*', cors({
+  origin: [
+    "http://localhost:5173",
+    "https://client-frontend-backend-generator.vercel.app",
+    "https://client-frontend-backend-generator-7oa22n0ki.vercel.app",
+    "https://client-frontend-backend-generator.netlify.app",
+  ],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+}));
 
 // Instancia del controlador (única para toda la aplicación)
 const diagramManager = new DiagramManager();

@@ -296,13 +296,21 @@ export class EmailService {
                     <p class="action-prompt">
                       ¿Deseas aceptar o rechazar esta invitación para colaborar en el diagrama?
                     </p>
-                    <div class="action-buttons" style="display: flex; justify-content: center; align-items: center; text-align: center; gap: 12px; flex-wrap: wrap;">
-                      <a href="${frontendUrl}invitation/${invitationId}?action=accept" class="accept-button" style="background: #10b981; color: white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; display: inline-block; text-align: center; border: none;">
-                        ✓ Aceptar Invitación
-                      </a>
-                      <a href="${frontendUrl}invitation/${invitationId}?action=reject" class="decline-button" style="background: #ef4444; color: white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; display: inline-block; text-align: center; border: none;">
-                        ✗ Rechazar Invitación
-                      </a>
+                    <div class="action-buttons" style="text-align: center; margin: 20px 0;">
+                      <table style="margin: 0 auto; border: none; border-collapse: collapse;">
+                        <tr>
+                          <td style="padding: 0 6px;">
+                            <a href="${frontendUrl}invitation/${invitationId}?action=accept" class="accept-button" style="background: #10b981; color: white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; display: inline-block; text-align: center; border: none;">
+                              ✓ Aceptar Invitación
+                            </a>
+                          </td>
+                          <td style="padding: 0 6px;">
+                            <a href="${frontendUrl}invitation/${invitationId}?action=reject" class="decline-button" style="background: #ef4444; color: white; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; display: inline-block; text-align: center; border: none;">
+                              ✗ Rechazar Invitación
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
                     </div>
                   </div>
 
